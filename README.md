@@ -17,7 +17,8 @@ make && make bench
 
 ## Projects
 
-Pgeon is based on the commit `58cae0632f3ed75527a644678cd875858a787f62` at <https://gite.lirmm.fr/rsidhoum/pgeon.git>>
+Pgeon is based on the commit `58cae0632f3ed75527a644678cd875858a787f62` at <https://gite.lirmm.fr/rsidhoum/pgeon.git>.
+
 Tableau Workbench is based on the commit `e0214f7fb2ae209418fcaa0a53083c52d139f07b` at <https://github.com/rsidhoum/tableau-workbench>.
 
 ## Requirements
