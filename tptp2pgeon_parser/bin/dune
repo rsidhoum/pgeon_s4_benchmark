@@ -1,0 +1,4 @@
+(executable
+ (public_name tptp2pgeon_parser)
+ (name main)
+ (libraries tptp_parser unix))

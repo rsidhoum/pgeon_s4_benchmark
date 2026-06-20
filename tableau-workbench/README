@@ -1,0 +1,48 @@
+Tableau Workbench
+=================
+
+The current build requires:
+
+- OCaml 4.12.x
+- Findlib
+- ExtLib
+- Camlp5 7.14
+
+Recommended OPAM setup
+======================
+
+Create the build switch and install the dependencies:
+
+    opam switch create tableau-workbench ocaml-base-compiler.4.12.1
+    opam install --switch=tableau-workbench ocamlfind extlib camlp5.7.14
+
+Configure and build TWB:
+
+    opam exec --switch=tableau-workbench -- ./configure
+    make
+
+The generated Makefile records the selected OPAM toolchain, so subsequent
+`make` commands do not depend on which switch is active in the current shell.
+
+Build and test the bundled provers
+==================================
+
+Build the propositional and modal logic provers:
+
+    make provers
+
+For example, run the propositional prover with:
+
+    printf 'p v ~ p\n' | ./library/pc.twb
+
+The generated prover executables are written to `library/`.
+
+Installation
+============
+
+To install the compiler and library files:
+
+    make install
+
+Depending on the selected installation prefix, this may require appropriate
+filesystem permissions.

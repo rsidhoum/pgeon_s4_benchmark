@@ -1,0 +1,10 @@
+(library
+ (name tptp_parser)
+ (modules ast lexer parser writer status twb_writer)
+ (libraries str))
+
+(menhir
+ (modules parser))
+
+(ocamllex
+ (modules lexer))

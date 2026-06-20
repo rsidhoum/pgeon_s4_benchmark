@@ -1,0 +1,8 @@
+function a : -> term
+function P : term -> formula
+
+/* P(a) ∧ ¬P(a) */
+
+P(a());
+not(P(a()));
+

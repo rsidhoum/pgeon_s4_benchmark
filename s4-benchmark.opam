@@ -1,0 +1,13 @@
+opam-version: "2.0"
+synopsis: "Shared build environment for Pgeon and Tableau Workbench"
+maintainer: "Romain Sidhoum <romain.sidhoum@umontpellier.fr>"
+authors: "Romain Sidhoum <romain.sidhoum@umontpellier.fr>"
+license: ["CECILL-2.1" "GPL-3.0-or-later"]
+depends: [
+  "ocaml" {= "4.12.1"}
+  "dune" {= "3.19.0"}
+  "ocamlfind"
+  "extlib"
+  "camlp5" {= "7.14"}
+  "menhir"
+]

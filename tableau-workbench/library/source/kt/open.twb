@@ -1,0 +1,2 @@
+Box p1 -> Box Box p1
+~Box p1 -> Box ~Box p1

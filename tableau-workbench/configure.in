@@ -1,0 +1,102 @@
+#
+# autoconf input for Objective Caml programs
+# Copyright (C) 2001 Jean-Christophe Filliatre
+#   from a first script by Georges Mariano 
+# 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License version 2, as published by the Free Software Foundation.
+# 
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# 
+# See the GNU Library General Public License version 2 for more details
+# (enclosed in the file LGPL).
+
+AC_INIT(Makefile.in)
+
+# Check for Ocaml compilers
+AC_CHECK_PROG(OCAMLC,ocamlc,ocamlc,no)
+if test "$OCAMLC" = no ; then
+	AC_MSG_ERROR(Cannot find ocamlc.)
+fi
+OCAMLC=`command -v "$OCAMLC"`
+TOOLCHAIN_BINDIR=`dirname "$OCAMLC"`
+
+OCAMLVERSION=`$OCAMLC -v | sed -n -e 's|.*version *\(.*\)$|\1|p' `
+echo "ocaml version is $OCAMLVERSION"
+case "$OCAMLVERSION" in
+    4.12.*) ;;
+    *) AC_MSG_ERROR([OCaml 4.12.x is required. Run: opam exec --switch=tableau-workbench -- ./configure]) ;;
+esac
+
+OCAMLLIB=`$OCAMLC -v | tail -1 | cut -f 4 -d " "`
+echo "ocaml library path is $OCAMLLIB"
+
+#if test $OCAMLVERSION in
+#    3.0[9].* )
+#	AC_MSG_RESULT(ok)
+#    *)
+#	AC_MSG_ERROR(Version of ocaml too old or too recent : 3.09.x required.)
+#esac
+
+AC_CHECK_PROG(OCAMLOPT,ocamlopt,ocamlopt,no)
+if test "$OCAMLOPT" = no ; then
+    AC_MSG_ERROR(Cannot find ocamlopt.)
+fi
+OCAMLOPT=`command -v "$OCAMLOPT"`
+
+AC_CHECK_PROG(OCAMLDEP,ocamldep,ocamldep,no)
+if test "$OCAMLDEP" = no ; then
+    AC_MSG_ERROR(Cannot find ocamldep.)
+fi
+OCAMLDEP=`command -v "$OCAMLDEP"`
+
+AC_CHECK_PROG(OCAMLFIND,ocamlfind,ocamlfind,no)
+if test "$OCAMLFIND" = no ; then
+    AC_MSG_ERROR(Cannot find ocamlfind.)
+fi
+OCAMLFIND=`command -v "$OCAMLFIND"`
+
+echo -n "Checking for extlib ... "
+LIB=`$OCAMLFIND query extlib`
+if test "$LIB" = ""; then
+    AC_MSG_ERROR(Cannot find the extlib package.)
+else
+    AC_MSG_RESULT(ok)
+fi
+
+echo -n "Checking for camlp5 ... "
+LIB=`$OCAMLFIND query camlp5`
+if test "$LIB" = ""; then
+    AC_MSG_ERROR(Cannot find the camlp5 package.)
+else
+    AC_MSG_RESULT(ok)
+fi
+
+echo -n "Checking for cgi support ... "
+LIB=`$OCAMLFIND query xmlrpc-light`
+if test "$LIB" = ""; then
+    AC_MSG_WARN(Cannot compile Cgi iterface.)
+    TARGETS=nc
+else
+    TARGETS="nc cgi"
+    AC_MSG_RESULT(ok)
+fi
+
+OCAMLPATH=`pwd`
+# substitutions to perform
+AC_SUBST(OCAMLC)
+AC_SUBST(OCAMLOPT)
+AC_SUBST(OCAMLDEP)
+AC_SUBST(OCAMLVERSION)
+AC_SUBST(OCAMLLIB)
+AC_SUBST(OCAMLPATH)
+AC_SUBST(TOOLCHAIN_BINDIR)
+AC_SUBST(TARGETS)
+
+# Finally create the Makefile from Makefile.in
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+chmod a-w Makefile

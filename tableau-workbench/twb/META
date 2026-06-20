@@ -1,0 +1,48 @@
+# Specifications for the Tableau WorkBench (TWB)
+version = "3.4"
+description = "Runtime support for the TWB"
+requires = "str unix twb.core twb.sequent"
+archive(syntax,preprocessor) = "pa_sequent.cma pr_o.cmo"
+preprocessor = "camlp5o"
+#directory = "+twb"
+
+package "core" (
+	version = "[distributed with TWB]"
+	description = "twb core"
+	archive(native) = "twbcore.cmxa"
+)
+
+package "types" (
+	version = "[distributed with TWB]"
+	description = "twb data structures"
+	archive(native) = "twbtypes.cmxa"
+)
+
+package "parser" (
+	version = "[distributed with TWB]"
+	description = "input parser"
+	requires = "camlp5.gramlib"
+	archive(native) = "inputParser.cmxa"
+)
+
+package "sequent" (
+	version = "[distributed with TWB]"
+	description = "twb sequent/tableau library"
+	requires = "twb.types extlib"
+	archive(native) = "twbseq.cmxa"
+)
+
+package "cli" (
+	version = "[distributed with TWB]"
+	description = "twb command line interface"
+	requires = "twb.sequent twb.parser"
+	archive(native) = "twbcli.cmxa"
+)
+
+package "cgi" (
+	version = "[distributed with TWB]"
+	description = "twb cgi interface"
+	#requires = "pcre netstring pxp netclient xmlrpc twb.sequent twb.parser"
+	requires = "twb.sequent twb.parser"
+	archive(native) = "twbcgi.cmxa"
+)

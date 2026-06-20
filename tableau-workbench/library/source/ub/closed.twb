@@ -1,0 +1,63 @@
+#ub
+~ ( AG p & EF ~ p )
+#axioms 
+# A.1
+AG (p -> q) -> ( AG p -> AG q)
+# A.2
+AX (p -> q) -> ( AX p -> AX q)
+# A.3
+(AG p) -> (AX p & AX AX AG p)
+# A.4
+(AG (p -> AX p)) -> (p -> AG p)
+# E.1
+(AG (p -> q)) -> (EG p -> EG q)
+# E.2
+EG p -> ( p & EX EG p )
+# E.3
+AG p -> EG p
+# E.4
+(AG ( p -> EX p)) -> (p -> EG p)
+#theorems 
+# T.1
+AG p -> p
+# T.2
+AG p -> AF p
+# T.3
+AX (p -> q) -> ( EX p -> EX q)
+# T.4
+AG (p -> q) -> ( AF p -> AF q)
+# T.5
+EG p -> EX p
+# T.6
+AX p -> EX p
+# T.7
+(AG (p & q)) <-> (AG p & AG q)
+# T.8
+(EG (p & q))  -> (EG p & EG q)
+# T.9
+(AX (p & q)) <-> (AX p & AX q)
+# T.10
+(EX (p & q))  -> (EX p & EX q)
+# T.11
+(AX p & EX q) -> EX (p & q)
+# T.12
+(AG p & EG q) -> EG (p & q)
+# T.13
+AG p <-> (p & AX AG p)
+# T.14
+EG p <-> (p & EX EG p)
+# T.15
+AG p <-> AG AG p
+# T.16
+EG p <-> EG EG p
+# T.17
+(EG (p -> AX p)) -> (p -> EG p)
+# T.18
+(AF AG p) -> AG AF p
+# T.19
+EG ((p v EG q) & ( EG p v q )) <-> (EG p v EG q)
+# T.20
+(AX AG p) <-> AG AX p
+# T.21
+EX EG p -> EG EX p
+

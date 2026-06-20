@@ -1,0 +1,5 @@
+function a b : -> formula
+
+/* ¬A ∨ ¬B ⇒ ¬(A ∧ B) */
+
+right(imp(or(not(a()), not(b())), not(and(a(), b())))) ;

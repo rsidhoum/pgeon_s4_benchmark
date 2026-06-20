@@ -1,0 +1,28 @@
+# Autoconf output
+/Makefile
+/config.log
+/config.status
+/configure~
+/autom4te.cache/
+
+# OCaml build output
+*.a
+*.annot
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.cmxs
+*.d
+*.o
+*.top
+._bcdi/
+._d/
+._ncdi/
+
+# Generated executables
+/library/*.cgi
+/library/*.twb
+/utils/cgiclient
+/utils/twbcompile

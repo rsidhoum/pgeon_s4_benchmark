@@ -1,0 +1,37 @@
+/_opam/
+/.deps-installed
+
+# Benchmark outputs.
+/results.csv
+/problems/pgeon/*.pgeon
+/problems/twb/*.twb
+
+# Local build stamps.
+/.s4_benchmark_build
+/**/.s4_benchmark_build
+
+# Dune build directories.
+/_build/
+/**/_build/
+
+# OCaml and native build outputs.
+*.a
+*.annot
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.cmxs
+*.o
+
+# Tableau Workbench generated binaries/packages.
+/tableau-workbench/twb/*.a
+/tableau-workbench/twb/*.cma
+/tableau-workbench/twb/*.cmi
+/tableau-workbench/twb/*.cmo
+/tableau-workbench/twb/*.cmx
+/tableau-workbench/twb/*.cmxa
+/tableau-workbench/twb/*.o
+/tableau-workbench/interface/cli/twb
+/tableau-workbench/library/*.twb

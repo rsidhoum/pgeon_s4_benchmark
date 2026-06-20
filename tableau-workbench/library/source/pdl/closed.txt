@@ -1,0 +1,19 @@
+[p] (a -> b) -> ([p] a -> [p] b)
+[p] (a & b) <-> ([p]a & [p]b)
+[p U q]a <-> ([p] a & [q] a)
+[p;q]a <-> [p] [q] a
+a & [p] [*p] a <-> [*p] a
+a & [*p]( a  -> [p]a) ->[*p] a
+[*p](a -> [p]a) -> (a -> [*p]a)
+~ ( < b ; * a > p & [ * b ; * a ] ~ p )
+< *a> p <-> p v <a> < *a> p
+[*p]a -> [p]a
+[*(p U q)]a -> [p U q]a
+[*p]a -> [*p][*p] a
+[p][*q]a -> [p U(p;q)]a
+[*(p U q)]a -> [*p][*q]a
+#Broken !
+[*p]a -> [*(p;p)]a
+[p;*(q;p)]a -> [*(p;q);p]a
+#not done
+#[?b]a <-> (b -> a)

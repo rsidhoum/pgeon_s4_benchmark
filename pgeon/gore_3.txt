@@ -1,0 +1,46 @@
+main type formula
+
+function not  	: formula -> formula
+function and  	: formula formula -> formula
+function or   	: formula formula -> formula
+function imp  	: formula formula -> formula
+function equ    : formula formula -> formula
+
+function box  	: formula -> formula
+function diam 	: formula -> formula
+
+function SBox	: formula -> formula
+
+rule rAxiom	: P ; not(P) 		==X
+
+rule rNNPP	: not(not(P))		==> P
+rule rDiam	: diam(P)		==> not(box(not(P)))
+rule rNDiam	: not(diam(P))		==> box(not(P))
+
+rule rAnd	: and(P,Q)		==> P ; Q
+rule rNOr	: not(or(P,Q))		==> not(P) ; not(Q)
+rule rNImp	: not(imp(P,Q))		==> P ; not(Q)
+
+rule rNAnd	: not(and(P,Q))		==> not(P) | not(Q)
+rule rOr	: or(P,Q)		==> P | Q
+rule rImp	: imp(P,Q)		==> not(P) | Q
+
+rule rEquiv	    : equ(P,Q)		==> imp(P, Q) ; imp(Q, P)
+rule rNEquiv	: not(equ(P,Q))		==> not(imp(P, Q)) | not(imp(Q, P))
+
+rule rT		    : box(P)		==> SBox(P) ; P 
+rule rWeak    : X ; Y     ==> X
+rule trans_box: SBox(P)   ==> box(P)
+
+tree rule rS4 : ( not(box(P)) ; ...Z ; ...B) | ...T --> (not(P); ...B) | ...T
+where {
+  ...B : SBox(_)
+  ...Z : ~SBox(_)
+}
+
+strategy elim_diam : rDiam || rNDiam
+strategy alpha : rNNPP || rAnd || rNOr || rNImp || elim_diam
+strategy beta : rNAnd || rOr || rImp || rEquiv || rNEquiv
+strategy modal_world : rS4 ; trans_box*
+
+main strategy prove : (rAxiom || alpha || rT! || beta || modal_world)*

@@ -1,0 +1,103 @@
+
+OCAMLC   = @OCAMLC@
+OCAMLOPT = @OCAMLOPT@
+OCAMLLIB = @OCAMLLIB@
+OCAMLVERSION = @OCAMLVERSION@
+TOOLCHAIN_BINDIR = @TOOLCHAIN_BINDIR@
+
+PATH := $(TOOLCHAIN_BINDIR):$(PATH)
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+
+#avoid warning from autoconf
+datarootdir=@datarootdir@
+
+BINDIR=@bindir@
+MANDIR=@mandir@
+LIBDIR=$(OCAMLLIB)/twb
+
+OCAMLMAKEFILE=@OCAMLPATH@/utils/OCamlMakefile
+# as fast as we can !
+#OCAMLFLAGS=-unsafe -noassert
+OCAMLPATH=@OCAMLPATH@
+export OCAMLMAKEFILE OCAMLFLAGS OCAMLPATH PATH
+
+TARGETS=@TARGETS@
+
+#######################################################
+all: $(TARGETS)
+
+nc:
+	cd visit && make && cp *.cm* *.a ../twb/
+	cd types && make && cp *.cm* *.a ../twb/
+	cd sequent && make && cp *.cm* *.a ../twb/
+	cd parsing && make && cp *.cm* *.a ../twb/
+	cd interface/cli && make && cp *.cm* *.a *.o ../../twb/
+	cd utils && make 
+	cd twb && ranlib *.a
+
+cgi:
+	cd interface/cgi && make && cp *.cm* *.a *.o ../../twb/
+
+provers: library/pc.ml library/k.ml library/kt.ml library/s4.ml library/pltl.ml
+	ranlib @OCAMLPATH@/twb/*.a
+	cd library && \
+	    ../utils/twbcompile pc.ml && \
+	    ../utils/twbcompile k.ml && \
+	    ../utils/twbcompile kt.ml && \
+	    ../utils/twbcompile s4.ml && \
+	    ../utils/twbcompile pltl.ml
+
+clean:
+	cd visit && make clean
+	cd types && make clean
+	cd sequent && make clean
+	cd parsing && make clean
+	cd interface/cli && make clean
+	cd interface/cgi && make clean
+	cd utils && make clean
+	cd twb && rm -f *.cm* *.a *.o twb*
+
+dist-clean: clean clean-provers
+	rm -f config.status config.log config.cache Makefile
+
+install:
+	mkdir -p $(TMPDIR)$(LIBDIR)
+	mkdir -p $(TMPDIR)$(BINDIR)
+	cp twb/* $(TMPDIR)$(LIBDIR)
+	ranlib $(TMPDIR)$(LIBDIR)/*.a
+	cp utils/twbcompile $(TMPDIR)$(BINDIR)
+
+install-provers:
+	mkdir -p $(TMPDIR)$(BINDIR)
+	cp library/*.twb $(TMPDIR)$(BINDIR)
+
+clean-provers:
+	rm -f library/*.twb
+	rm -f library/*.cgi
+
+# Make MacOS X package
+
+.PHONY: package-macosx
+
+package-macosx: clean-macosx
+	sh configure --prefix=/usr/local
+	$(MAKE) -e TMPDIR=package-macosx/root LIBDIR=$(OCAMLLIB)/site-lib/twb install
+	$(MAKE) -e TMPDIR=package-macosx/root LIBDIR=$(OCAMLLIB)/site-lib/twb install-provers
+	export VERSION=3.3 && sh utils/make-package-macosx
+	#rm -rf package-macosx/root
+
+clean-macosx:
+	sudo rm -rf package-macosx
+	#rm -rf package-macosx/*.pkg package-macosx/*.dmg
+
+##########################################################
+Makefile: Makefile.in config.status
+	./config.status
+
+config.status:
+	./config.status --recheck
+
+configure: configure.in
+	autoconf

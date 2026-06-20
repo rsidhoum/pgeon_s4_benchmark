@@ -1,0 +1,5 @@
+function a : -> formula
+
+/* ¬A ⇔ ¬¬¬A */
+
+right(equ(not(a()), not(not(not(a()))))) ;

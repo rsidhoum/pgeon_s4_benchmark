@@ -1,0 +1,6 @@
+# counter  
+~ ( AG (AF (p & q) & AF (p & ~ q) & AF (~ p & q)) )
+# from Ben-Ari T19 ExG/AxG
+AG ((p v AG q) & ( AG p v q )) <-> (AG p v AG q)
+# Florian
+~ (EG (( (AX (EF p1)) & (~ p1)) ))

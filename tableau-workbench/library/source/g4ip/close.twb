@@ -1,0 +1,31 @@
+## Eleanor's examples
+=> (q & (r -> s)) -> ((s -> r) v q)
+##=> (r -> Falsum) -> q v (r -> (r -< q) & r)
+## Rauszer's axioms
+=> (a -> b) -> ( (b -> y) -> (a -> y) )
+=> a -> ( a v b )
+=> b -> ( a v b )
+=> (a -> y) -> ( (b -> y) -> ( a v b -> y ) )
+=> a & b -> a
+=> a & b -> b
+=> (y -> a) -> ( (y -> b) -> ( y -> (a & b) ) )
+=> (a -> ( b -> y)) -> ( a & b -> y )
+=> ( a & b -> y ) -> ( a -> ( b -> y ) )
+## => (a -> b) -> (!b -> !a)
+=> (((((b -> c) & (c -> b)) -> ((a & b) & c)) & (((c -> a) & (a -> c)) -> (( a & b) & c))) & (((a -> b) & (b -> a)) -> ( (a & b ) & c))) -> (( a & b ) & c)
+# ILTP valid examples
+=> ( (( ( p1 v p2 ) & ( (! p1) v p2 )) & ( p1 v (! p2 )) ) -> ! ( !  p1 v ! p2 ) )
+=> ( (! ( p -> q )) -> ( q -> p ) )
+q -> r;  r-> ( p & q ); p -> ( q v r ) => (p -> q)  & (q -> p)
+=> ( ( p v ( q & r ) ) -> ( ( p v q ) & ( p v r ) ) ) & ( ( ( p v q ) & ( p v r ) ) -> ( p v ( q & r ) ))
+=> ( p -> p ) & ( p -> p)
+=> ( ( a & b ) -> ( (a -> b)  & (b -> a) ) )
+a => !(!(a))
+!(a) v !(b) => !(b) v !(a)
+=> !(!(( a v !(a) )))
+=> !(!(( ( a & b ) v ( !(a) v !(b) ) )))
+=> !(!(( ( a & ( b & c ) ) v ( !(a) v ( !(b) v !(c) ) ) )))
+s ; ( !(( t -> r) ) -> p) => ( !(( ( p -> q)  & ( t -> r)  )) -> ( !(!(p)) & ( s & s ) ))
+# Formulae requiring many contractions (Franzen)
+=> ! (!(!p1 v p1))
+=> ! (!(((!p1 v !p2) v !p3) v ((p1 & p2) & p3)))

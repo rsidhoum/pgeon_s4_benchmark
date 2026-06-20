@@ -1,0 +1,12 @@
+[1] [2] a -> [1] a
+C a
+C C a -> C a
+C a -> a
+C [1] a -> C a
+[1] C a -> C a
+[1] [2] a -> [1] a
+[1] a -> [1] [1] a
+dC a
+dC a & C dC a
+<1> a & [1] dC a & [1] C E dC a & [1] E dC a
+

@@ -1,0 +1,30 @@
+(lang dune 3.19)
+(using menhir 2.1)
+
+(name tptp2pgeon_parser)
+
+(generate_opam_files true)
+
+(source
+ (github username/reponame))
+
+(authors "Author Name <author@example.com>")
+
+(maintainers "Maintainer Name <maintainer@example.com>")
+
+(license LICENSE)
+
+(documentation https://url/to/documentation)
+
+(package
+ (name tptp2pgeon_parser)
+ (synopsis "TPTP to Pgeon/TWB problem translator")
+ (description "Parser and translators for TPTP problems used by the S4 benchmark.")
+ (depends
+  (ocaml (>= 4.12))
+  (dune (= 3.19.0))
+  menhir)
+ (tags
+  (tptp pgeon tableau)))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
