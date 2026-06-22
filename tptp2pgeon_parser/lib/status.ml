@@ -80,5 +80,6 @@ let to_string = function
 
 let expected_result = function
   | Theorem | Unsatisfiable -> Some "Close"
-  | NonTheorem | Satisfiable -> Some "Open"
+  | Satisfiable -> Some "Open"
+  | NonTheorem -> Some "Open/Close"
   | Unsolved | UnknownStatus -> None

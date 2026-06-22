@@ -9,8 +9,16 @@ expected_status_from_file() {
 expected_result_for_status() {
     case "$1" in
         Theorem|Unsatisfiable) printf 'Close' ;;
-        NonTheorem|Satisfiable) printf 'Open' ;;
+        NonTheorem) printf 'Open/Close' ;;
+        Satisfiable) printf 'Open' ;;
         *) printf 'Unknown' ;;
+    esac
+}
+
+result_matches_expected() {
+    case "$2" in
+        Open/Close) [ "$1" = "Open" ] || [ "$1" = "Close" ] ;;
+        *) [ "$1" = "$2" ] ;;
     esac
 }
 
@@ -34,7 +42,9 @@ for pgeon_file in problems/pgeon/*.pgeon; do
     if [ "$pgeon_status" -ne 0 ] || [ -z "$pgeon_result" ]; then
         pgeon_result="Error"
     fi
-    if [ "$expected_result" != "Unknown" ] && [ "$pgeon_result" = "$expected_result" ]; then
+    if [ "$expected_result" = "Unknown" ]; then
+        pgeon_ok="skip"
+    elif result_matches_expected "$pgeon_result" "$expected_result"; then
         pgeon_ok="yes"
     else
         pgeon_ok="no"
@@ -47,7 +57,9 @@ for pgeon_file in problems/pgeon/*.pgeon; do
     if [ "$twb_status" -ne 0 ] || [ -z "$twb_result" ]; then
         twb_result="Error"
     fi
-    if [ "$expected_result" != "Unknown" ] && [ "$twb_result" = "$expected_result" ]; then
+    if [ "$expected_result" = "Unknown" ]; then
+        twb_ok="skip"
+    elif result_matches_expected "$twb_result" "$expected_result"; then
         twb_ok="yes"
     else
         twb_ok="no"

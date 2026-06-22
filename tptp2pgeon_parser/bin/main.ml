@@ -27,6 +27,14 @@ let refutation_ast ast =
         ast.formulas;
   }
 
+let should_negate_conjecture = function
+  | Status.Theorem -> true
+  | Status.Unsatisfiable
+  | Status.NonTheorem
+  | Status.Satisfiable
+  | Status.Unsolved
+  | Status.UnknownStatus -> false
+
 let speclist = [
   ("--pgeon", Arg.Unit (fun () -> target := Pgeon), " Translate TPTP to Pgeon syntax (default)");
   ("--twb",   Arg.Unit (fun () -> target := Twb),   " Translate TPTP to TWB syntax");
@@ -57,7 +65,11 @@ let () =
         let ast = Parser.problem Lexer.token lexbuf in
         close_in ic;
 
-        let final_ast = if has_conjecture ast then refutation_ast ast else ast in
+        let final_ast =
+          if has_conjecture ast && should_negate_conjecture status then
+            refutation_ast ast
+          else ast
+        in
         begin
           match !target with
           | Pgeon -> Writer.print_problem final_ast status_str

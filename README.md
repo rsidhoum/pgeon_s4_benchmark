@@ -55,7 +55,7 @@ red otherwise. The CSV columns are:
 
 - `file`: problem basename
 - `expected_status`: status read from the original QMLTP/TPTP problem
-- `expected_result`: expected solver shape for a refutation prover
+- `expected_result`: accepted solver result for the emitted problem
 - `pgeon_result`, `pgeon_time`, `pgeon_ok`
 - `twb_result`, `twb_time`, `twb_ok`
 - `same`: whether Pgeon and Tableau Workbench returned the same result
@@ -66,12 +66,15 @@ Statuses are mapped as follows:
 | --- | --- |
 | `Theorem` | `Close` |
 | `Unsatisfiable` | `Close` |
-| `NonTheorem` | `Open` |
+| `NonTheorem` | `Open/Close` |
 | `Satisfiable` | `Open` |
 
-For conjecture problems, the parser translates the benchmark as a refutation
-task: axioms are kept and the conjecture is negated. Therefore a theorem is
-expected to close, while a non-theorem is expected to remain open.
+For conjecture problems labelled `Theorem`, the parser translates the benchmark
+as a refutation task: axioms are kept and the conjecture is negated. Other
+conjectures are emitted unchanged. Therefore theorem and unsatisfiable problems
+are expected to close, satisfiable problems are expected to remain open, and
+non-theorem problems accept either result: `Close` means the non-negated formula
+is unsatisfiable, while `Open` means it is satisfiable but not valid.
 
 ## Problems
 

@@ -31,6 +31,9 @@ NR == 1 {
         same
 
     total += 1
+    if (expected != "Unknown") {
+        scored += 1
+    }
     if (pgeon_ok == "yes") {
         pgeon_pass += 1
     }
@@ -49,8 +52,16 @@ END {
     }
 
     printf "\n"
-    printf "pgeon: %d/%d match expected\n", pgeon_pass, total
-    printf "twb:   %d/%d match expected\n", twb_pass, total
+    printf "pgeon: %d/%d match expected", pgeon_pass, scored
+    if (scored < total) {
+        printf " (%d unscored)", total - scored
+    }
+    printf "\n"
+    printf "twb:   %d/%d match expected", twb_pass, scored
+    if (scored < total) {
+        printf " (%d unscored)", total - scored
+    }
+    printf "\n"
     printf "same:  %d/%d pgeon/twb agree\n", same_pass, total
 }
 
@@ -62,6 +73,9 @@ function formatted_result(result, time, ok, label) {
 
     if (ok == "yes") {
         return green label reset
+    }
+    if (ok == "skip") {
+        return label
     }
     return red label reset
 }
